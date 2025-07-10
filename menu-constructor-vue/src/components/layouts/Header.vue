@@ -20,6 +20,7 @@ import {RouterLink} from "vue-router";
 <style scoped>
 
 .header {
+  align-self: flex-start;
   line-height: 1.5;
   max-height: 100px;
 }
