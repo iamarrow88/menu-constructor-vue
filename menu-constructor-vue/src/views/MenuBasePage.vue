@@ -31,15 +31,14 @@
       <p>Создайте свою кулинарную библиотеку и наслаждайтесь процессом приготовления!
       </p>
     </div>
-    <div class="menu-base-page__content">
+    <div class="menu-base-page__content content">
       <button>Добавить рецепт</button>
 
       <fieldset class="menu-base-page__options options">
         <legend class="options__title">Показать рецепты для:</legend>
         <input type="checkbox" name="breakfast" id="breakfast"><label for="breakfast">Завтрак</label>
-        <input type="checkbox" name="snack1" id="snack1"><label for="snack1">Перекус 1</label>
+        <input type="checkbox" name="snack" id="snack"><label for="snack">Перекус</label>
         <input type="checkbox" name="lunch" id="lunch"><label for="lunch">Обед</label>
-        <input type="checkbox" name="snack2" id="snack2"><label for="snack2">Перекус 2</label>
         <input type="checkbox" name="dinner" id="dinner"><label for="dinner">Ужин</label>
       </fieldset>
 
@@ -49,7 +48,7 @@
         <input v-for="tag in tags" type="checkbox" name={{tag}} id={{tag}}><label for={{tag}}>{{ tag }}</label>
       </fieldset>
 
-      <div v-if="receipts.length >= 1" class="menu-base-page__receipt-list">
+      <div v-if="receipts.length >= 1" class="menu-base-page__receipt-list receipt-list">
         <div v-for="receipt in receipts" class="receipt-card">
           <picture class="receipt-card__picture">
             <source srcset="../assets/images/photo_2025-05-28_09-34-59.jpg"/>
@@ -88,7 +87,7 @@ export default {
     return {
       isDescriptionVisible: true, //!TODO пусть выбор сохраняется при перезагрузке страницы
       receipts: [
-        {
+/*        {
           "name": "Омлет1",
           "mealType": "breakfast",
           "id": 0,
@@ -111,7 +110,7 @@ export default {
             },
           ],
           "howToCook": "по схеме"
-        }
+        }*/
       ],
     }
   },
@@ -143,28 +142,54 @@ export default {
   width: 100%;
 }
 
-.menu-base-page__receipt-list {
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 1rem;
+}
+
+.receipt-list {
   display: grid;
-  grid-template-rows: 250px;
   grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 0 auto;
+  max-width: 1310px;
 }
 
 .receipt-card {
+  padding: 24px 24px 16px 24px;
   width: 100%;
-  height: 100%;
+  height: 350px;
+  border: 1px solid rgba(38, 37, 34, 0.16);
+  border-radius: 24px;
+  transform: scale(1);
+  transition: all 0.3s ease-in-out;
+  background-color: rgb(246, 235, 213);
+}
+
+.receipt-card:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
 }
 
 .receipt-card__picture {
   display: block;
   margin: 0 auto;
   width: 80%;
-  height: 100%;
+  height: 70%;
+  overflow: hidden;
 }
 
 .receipt-card__picture > source, .receipt-card__picture > img  {
   display: block;
   max-width: 100%;
-  max-height: 100%;
-  object-fit: scale-down;
+  height: auto;
+  object-fit: cover;
+  object-position: center center;
+  margin: 0 auto;
 }
 </style>
