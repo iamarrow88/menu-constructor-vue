@@ -34,18 +34,61 @@
     <div class="menu-base-page__content content">
       <button>Добавить рецепт</button>
 
-      <fieldset class="menu-base-page__options options">
+      <fieldset class="menu-base-page__options options"> <!-- !TODO список приемов пищи из списка рецептов -->
         <legend class="options__title">Показать рецепты для:</legend>
-        <input type="checkbox" name="breakfast" id="breakfast"><label for="breakfast">Завтрак</label>
-        <input type="checkbox" name="snack" id="snack"><label for="snack">Перекус</label>
-        <input type="checkbox" name="lunch" id="lunch"><label for="lunch">Обед</label>
-        <input type="checkbox" name="dinner" id="dinner"><label for="dinner">Ужин</label>
+        <div class="options__input-group">
+          <input type="checkbox"
+                 name="breakfast"
+                 id="breakfast"
+                class="options__input">
+          <label for="breakfast"
+                 class="options__label">
+            Завтрак
+          </label>
+        </div>
+        <div class="options__input-group">
+          <input type="checkbox"
+                 name="snack"
+                 id="snack"
+                 class="options__input">
+          <label for="snack"
+                 class="options__label">
+            Перекус
+          </label>
+        </div>
+        <div class="options__input-group">
+          <input type="checkbox"
+                 name="lunch"
+                 id="lunch"
+                 class="options__input">
+          <label for="lunch"
+                 class="options__label">
+            Обед
+          </label>
+        </div>
+        <div class="options__input-group">
+          <input type="checkbox"
+                 name="dinner"
+                 id="dinner"
+                 class="options__input">
+          <label for="dinner"
+                 class="options__label">
+            Ужин
+          </label>
+        </div>
       </fieldset>
 
       <fieldset v-if="tags?.length !== 0" class="menu-base-page__tags tags">
         <legend class="tags__title">Показать рецепты с тегами:</legend>
-
-        <input v-for="tag in tags" type="checkbox" name={{tag}} id={{tag}}><label for={{tag}}>{{ tag }}</label>
+        <div v-for="(tagName, index) in tags" class="tags__input-group">
+          <input type="checkbox"
+                 :name="`${tagName}`"
+                 :id="`${tagName}`"
+                 :key="index"
+                  class="tags__input">
+          <label for="`${tagName}`"
+                 class="tags__label">{{ tagName }}</label>
+        </div>
       </fieldset>
 
       <div v-if="receipts.length >= 1" class="menu-base-page__receipt-list receipt-list">
@@ -72,8 +115,8 @@
 
 <script lang="ts">
 import type {iReceipt} from "@/types/types.ts";
-import type {PropType} from "vue";
 import {translateMealType} from "../utilites/translateMealType.ts";
+import {getTagsListFromReceiptsList} from "@/utilites/getTagsListFromReceiptsList.ts";
 
 interface iMenuBasePageData {
   isDescriptionVisible: boolean;
@@ -112,12 +155,8 @@ export default {
           "howToCook": "по схеме"
         }*/
       ],
+      tags: [],
     }
-  },
-  props: {
-    tags: {
-      type: Array as PropType<string[]>,
-    },
   },
   methods: {
     translateMealType,
@@ -134,6 +173,7 @@ export default {
     try {
       const rawReceiptsList = await fetch('http://127.0.0.1:3000/receipts');
       this.receipts = await rawReceiptsList.json();
+      this.tags = getTagsListFromReceiptsList(this.receipts);
     } catch (e) {
       console.log(e.message)
     }
@@ -148,6 +188,22 @@ export default {
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
+}
+
+.tags,
+.options {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.tags__input-group,
+.options__input-group {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
 }
 
 .content {
