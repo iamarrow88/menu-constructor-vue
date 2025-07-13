@@ -130,6 +130,14 @@ export default {
       return names.join(', ');
     }
   },
+  async mounted() {
+    try {
+      const rawReceiptsList = await fetch('http://127.0.0.1:3000/receipts');
+      this.receipts = await rawReceiptsList.json();
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
 }
 </script>
 

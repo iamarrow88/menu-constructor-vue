@@ -4,6 +4,7 @@ export interface iReceipt {
   "id": number,
   "ingredients": iIngredient[],
   "howToCook": string,
+  tags: string[],
 }
 
 interface iIngredient {
