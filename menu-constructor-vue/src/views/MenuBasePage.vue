@@ -46,7 +46,7 @@
       <fieldset v-if="tags?.length !== 0" class="menu-base-page__tags tags">
         <legend class="tags__title">Показать рецепты с тегами:</legend>
 
-        <input v-for="tag in tags" type="checkbox" name="tag" id="tag"><label for="tag">{{ tag }}</label>
+        <input v-for="tag in tags" type="checkbox" name={{tag}} id={{tag}}><label for={{tag}}>{{ tag }}</label>
       </fieldset>
 
       <div v-if="receipts.length >= 1" class="menu-base-page__receipt-list">
@@ -57,7 +57,7 @@
           </picture>
 
           <p>{{ receipt.name }}</p>
-          <p>{{ receipt.mealType }}</p>
+          <p>{{ translateMealType(receipt.mealType) }}</p>
           <p>Ингредиенты: {{ extractObjectKeysNames(receipt.ingredients) }}</p>
 <!--          <p>Ингредиенты:</p>
           <ul>
@@ -73,11 +73,15 @@
 
 <script lang="ts">
 import type {iReceipt} from "@/types/types.ts";
+import type {PropType} from "vue";
+import {translateMealType} from "../utilites/translateMealType.ts";
 
 interface iMenuBasePageData {
   isDescriptionVisible: boolean;
   receipts: iReceipt[];
 }
+
+type ITagsArray = string[];
 
 export default {
   data() {
@@ -112,9 +116,13 @@ export default {
     }
   },
   props: {
-    tags: Array,
+    tags: {
+      type: Array as PropType<string[]>,
+    },
   },
   methods: {
+    translateMealType,
+    findMealType: translateMealType,
     toggleDescriptionVisibility() {
       this.isDescriptionVisible = !this.isDescriptionVisible;
     },
