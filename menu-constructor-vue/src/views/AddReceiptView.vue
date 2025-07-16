@@ -54,6 +54,8 @@
 
 <script>
 import {formatIngredients} from "@/utilites/formatIngredients.js";
+import {stringIsNotEmpty} from "@/utilites/validation/string-is-not-empty.js";
+import {arrayIsNotEmpty} from "@/utilites/validation/array-is-not-empty.js";
 
 export default {
   name: 'AddReceiptView',
@@ -78,21 +80,26 @@ export default {
   methods: {
     async saveReceipt() {
       this.receipt.ingredients = formatIngredients(this.rawIngredients);
-      const addingReceipt = await fetch('http://127.0.0.1:3000/receipts', {
-        method: 'POST',
-        headers: {},
-        body: JSON.stringify(this.receipt)
-      });
-      const response = await addingReceipt.json();
+      if (stringIsNotEmpty(this.receipt.name)
+        && stringIsNotEmpty(this.receipt.howToCook)
+        && arrayIsNotEmpty(this.receipt.ingredients)) {
+        const addingReceipt = await fetch('http://127.0.0.1:3000/receipts', {
+          method: 'POST',
+          headers: {},
+          body: JSON.stringify(this.receipt)
+        });
+        const response = await addingReceipt.json();
 
-      console.log(response);
+        console.log(response);
 
-      if (response.id) {
-        this.$router.push('/base');
+        if (response.id) {
+          this.$router.push('/base');
+        } else {
+          console.log('Рецепт не добавлен, ошибка');
+        }
       } else {
-        console.log('Рецепт не добавлен, ошибка');
+        console.log('Заполнены не все поля');
       }
-
     },
     saveTag() {
       this.receipt.tags.push(this.newTag);
