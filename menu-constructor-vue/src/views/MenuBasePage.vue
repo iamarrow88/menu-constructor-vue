@@ -33,7 +33,6 @@
     </div>
     <div class="menu-base-page__content content">
       <RouterLink to="/add-receipt">Добавить рецепт</RouterLink>
-      <button>Добавить рецепт</button>
 
       <fieldset class="menu-base-page__options options"> <!-- !TODO список приемов пищи из списка рецептов -->
         <legend class="options__title">Показать рецепты для:</legend>

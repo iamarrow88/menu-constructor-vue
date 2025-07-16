@@ -1,4 +1,4 @@
-export function formatIngredients(rawIngredients: string): iIngredient[] {
+export function formatIngredients(rawIngredients: string, separator: string): iIngredient[] {
   try {
     const lines = rawIngredients.replace(/\n|\r\n|\r/g, "<br>").split('<br>');
 
@@ -6,7 +6,7 @@ export function formatIngredients(rawIngredients: string): iIngredient[] {
       const ingredients = [];
       lines.map(line => {
         const acc = {};
-        const [ ingredient, count ] = line.split('-');
+        const [ ingredient, count ] = line.split(separator);
         acc["value"] = Boolean(count) ? count.trim() : '';
         acc["name"] = Boolean(ingredient) ? ingredient.trim() : '';
         ingredients.push(acc);

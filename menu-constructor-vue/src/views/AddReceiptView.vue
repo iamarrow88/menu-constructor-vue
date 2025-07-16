@@ -26,7 +26,11 @@
         </div>
       </div>
       <div class="my-textarea">
-        <label for="ingredients-area">Список ингридиентов в формате "Ингридиент" - "количество". Будьте внимательны: После второго тире в строке все теряется.</label>
+        <label for="ingredients-area">Список ингридиентов в формате "Ингридиент" <select v-model="separator">
+          <option>-</option>
+          <option>:</option>
+          <option>^</option>
+        </select> "количество". Будьте внимательны: После второго тире в строке все теряется.</label>
         <textarea name="ingredients-area"
                   id="ingredients-area"
                   cols="30"
@@ -75,14 +79,16 @@ export default {
       },
       rawIngredients: '',
       newTag: '',
+      separator: '-'
     }
   },
   methods: {
     async saveReceipt() {
-      this.receipt.ingredients = formatIngredients(this.rawIngredients);
+      this.receipt.ingredients = formatIngredients(this.rawIngredients, this.separator);
       if (stringIsNotEmpty(this.receipt.name)
         && stringIsNotEmpty(this.receipt.howToCook)
         && arrayIsNotEmpty(this.receipt.ingredients)) {
+        console.log(this.receipt);
         const addingReceipt = await fetch('http://127.0.0.1:3000/receipts', {
           method: 'POST',
           headers: {},
