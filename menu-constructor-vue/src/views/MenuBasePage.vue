@@ -32,6 +32,7 @@
       </p>
     </div>
     <div class="menu-base-page__content content">
+      <RouterLink to="/add-receipt">Добавить рецепт</RouterLink>
       <button>Добавить рецепт</button>
 
       <fieldset class="menu-base-page__options options"> <!-- !TODO список приемов пищи из списка рецептов -->
@@ -117,44 +118,20 @@
 import type {iReceipt} from "@/types/types.ts";
 import {translateMealType} from "../utilites/translateMealType.ts";
 import {getTagsListFromReceiptsList} from "@/utilites/getTagsListFromReceiptsList.ts";
+import {RouterLink} from "vue-router";
 
-interface iMenuBasePageData {
+interface IMenuBasePageData {
   isDescriptionVisible: boolean;
   receipts: iReceipt[];
+  tags: string[];
 }
 
-type ITagsArray = string[];
-
 export default {
-  data() {
+  components: {RouterLink},
+  data(): IMenuBasePageData {
     return {
       isDescriptionVisible: true, //!TODO пусть выбор сохраняется при перезагрузке страницы
-      receipts: [
-/*        {
-          "name": "Омлет1",
-          "mealType": "breakfast",
-          "id": 0,
-          "ingredients": [
-            {
-              name: "яйцо",
-              value: "2 шт"
-            },
-            {
-              name: "молоко",
-              value: "200 мл"
-            },
-            {
-              name: "соль",
-              value: "щепотка"
-            },
-            {
-              name: "разрыхлитель",
-              value: "0,5 ч.л."
-            },
-          ],
-          "howToCook": "по схеме"
-        }*/
-      ],
+      receipts: [],
       tags: [],
     }
   },
@@ -164,18 +141,22 @@ export default {
     toggleDescriptionVisibility() {
       this.isDescriptionVisible = !this.isDescriptionVisible;
     },
-    extractObjectKeysNames(array: {name: string, value: string}[]) {
-      const names = array.map(item => item.name);
-      return names.join(', ');
-    }
-  },
-  async mounted() {
-    try {
-      const rawReceiptsList = await fetch('http://127.0.0.1:3000/receipts');
-      this.receipts = await rawReceiptsList.json();
-      this.tags = getTagsListFromReceiptsList(this.receipts);
-    } catch (e) {
-      console.log(e.message)
+    extractObjectKeysNames(array: { name: string, value: string }[]) {
+      try {
+        const names = array.map(item => item.name);
+        return names.join(', ');
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async mounted() {
+      try {
+        const rawReceiptsList = await fetch('http://127.0.0.1:3000/receipts');
+        this.receipts = await rawReceiptsList.json();
+        this.tags = getTagsListFromReceiptsList(this.receipts);
+      } catch (e) {
+        console.log(e.message)
+      }
     }
   }
 }
@@ -191,7 +172,7 @@ export default {
 }
 
 .tags,
-.options {
+.options  {
   display: flex;
   justify-content: flex-start;
   align-items: center;

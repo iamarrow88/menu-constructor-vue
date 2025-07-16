@@ -1,6 +1,11 @@
 export interface iReceipt {
   "name": string,
-  "mealType": string,
+  "mealType": {
+    "breakfast": boolean,
+    "lunch": boolean,
+    "snack": boolean,
+    "dinner": boolean,
+  },
   "id": number,
   "ingredients": iIngredient[],
   "howToCook": string,

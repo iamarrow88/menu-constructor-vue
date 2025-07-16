@@ -30,6 +30,11 @@ const router = createRouter({
       component: () => import('../views/ShoppingListPage.vue')
     },
     {
+      path: '/add-receipt',
+      name: 'add-receipt',
+      component: () => import('../views/AddReceiptView.vue')
+    },
+    {
       path: '/:pathMatch(.*)*', // Catch-all route for unmatched paths
       name: 'NotFound',
       component: () => import('../views/NotFoundPage.vue')
