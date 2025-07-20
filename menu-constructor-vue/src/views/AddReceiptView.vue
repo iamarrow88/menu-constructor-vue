@@ -60,6 +60,8 @@
 import {formatIngredients} from "@/utilites/formatIngredients.js";
 import {stringIsNotEmpty} from "@/utilites/validation/string-is-not-empty.js";
 import {arrayIsNotEmpty} from "@/utilites/validation/array-is-not-empty.js";
+import {endpoints} from "@/constants/constants.js";
+import receiptsAPI from "@/utilites/API/receiptsAPI.js";
 
 export default {
   name: 'AddReceiptView',
@@ -88,17 +90,9 @@ export default {
       if (stringIsNotEmpty(this.receipt.name)
         && stringIsNotEmpty(this.receipt.howToCook)
         && arrayIsNotEmpty(this.receipt.ingredients)) {
-        console.log(this.receipt);
-        const addingReceipt = await fetch('http://127.0.0.1:3000/receipts', {
-          method: 'POST',
-          headers: {},
-          body: JSON.stringify(this.receipt)
-        });
-        const response = await addingReceipt.json();
+        const response = await receiptsAPI.createReceipt(this.receipt)
 
-        console.log(response);
-
-        if (response.id) {
+        if (response.status === 200) {
           this.$router.push('/base');
         } else {
           console.log('Рецепт не добавлен, ошибка');

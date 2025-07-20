@@ -6,7 +6,6 @@ export interface iReceipt {
     "snack": boolean,
     "dinner": boolean,
   },
-  "id": number,
   "ingredients": iIngredient[],
   "howToCook": string,
   tags: string[],

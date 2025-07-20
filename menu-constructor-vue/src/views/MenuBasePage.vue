@@ -118,6 +118,7 @@ import type {iReceipt} from "@/types/types.ts";
 import {translateMealType} from "../utilites/translateMealType.ts";
 import {getTagsListFromReceiptsList} from "@/utilites/getTagsListFromReceiptsList.ts";
 import {RouterLink} from "vue-router";
+import {endpoints} from "@/constants/constants.ts";
 
 interface IMenuBasePageData {
   isDescriptionVisible: boolean;
@@ -150,7 +151,7 @@ export default {
     },
     async mounted() {
       try {
-        const rawReceiptsList = await fetch('http://127.0.0.1:3000/receipts');
+        const rawReceiptsList = await fetch(endpoints.receipts);
         this.receipts = await rawReceiptsList.json();
         this.tags = getTagsListFromReceiptsList(this.receipts);
       } catch (e) {
