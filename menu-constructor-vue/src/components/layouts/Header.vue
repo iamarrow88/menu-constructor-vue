@@ -7,7 +7,7 @@ import {RouterLink} from "vue-router";
   <header class="header">
     <img alt="Site logo" class="logo" src="@/assets/logo/cooking-logo.svg" width="125" height="125" />
 
-    <nav>
+    <nav class="nav">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
       <RouterLink to="/base">Menu Base</RouterLink>
@@ -20,25 +20,40 @@ import {RouterLink} from "vue-router";
 <style scoped>
 
 .header {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  gap: 20rem;
   align-self: flex-start;
   line-height: 1.5;
   max-height: 100px;
+  width: 100%;
 }
 
 .logo {
   display: block;
-  margin: 0 auto 2rem;
+  width: 108px;
 }
 
-nav {
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  font-size: 12px;
+  font-family: var(--font-family),sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: var(--dark);
   text-align: center;
-  margin-top: 2rem;
 }
 
 nav a.router-link-exact-active {
-  color: var(--color-text);
+  border-bottom: 4px solid var(--primary-color-3);
+  border-radius: 2px;
+  padding: 8px;
+  height: 30px;
+  opacity: 1;
 }
 
 nav a.router-link-exact-active:hover {
@@ -47,8 +62,8 @@ nav a.router-link-exact-active:hover {
 
 nav a {
   display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  color: var(--color-text);
+  opacity: 0.4;
 }
 
 nav a:first-of-type {
@@ -59,11 +74,6 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
   }
 
   nav {
@@ -75,5 +85,12 @@ nav a:first-of-type {
     margin-top: 1rem;
   }
 }
+
+@media (hover: hover) {
+  a:hover {
+    opacity: 0.7;
+  }
+}
+
 
 </style>

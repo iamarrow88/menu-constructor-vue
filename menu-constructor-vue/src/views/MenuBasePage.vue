@@ -2,7 +2,7 @@
   <div class="menu-base-page">
     <button class="menu-base-page__description-management"
             @click="toggleDescriptionVisibility">
-      {{ this.isDescriptionVisible ? 'Скрыть описание' : 'Показать описание' }}
+      {{ isDescriptionVisible ? 'Скрыть описание' : 'Показать описание' }}
     </button>
     <div v-if="isDescriptionVisible" class="menu-base-page__description description description__visible">
       <h1>Добавление и управление рецептами</h1>
@@ -32,7 +32,7 @@
       </p>
     </div>
     <div class="menu-base-page__content content">
-      <RouterLink to="/add-receipt">Добавить рецепт</RouterLink>
+      <RouterLink class="content__btn" to="/add-receipt">Добавить рецепт</RouterLink>
 
       <fieldset class="menu-base-page__options options"> <!-- !TODO список приемов пищи из списка рецептов -->
         <legend class="options__title">Показать рецепты для:</legend>
@@ -114,11 +114,10 @@
 </template>
 
 <script lang="ts">
-import type {iReceipt} from "@/types/types.ts";
+import type {iCustomError, iReceipt} from "@/types/types.ts";
 import {translateMealType} from "../utilites/translateMealType.ts";
-import {getTagsListFromReceiptsList} from "@/utilites/getTagsListFromReceiptsList.ts";
 import {RouterLink} from "vue-router";
-import {endpoints} from "@/constants/constants.ts";
+import ReceiptsAPI from "@/utilites/API/receiptsAPI.ts";
 
 interface IMenuBasePageData {
   isDescriptionVisible: boolean;
@@ -149,14 +148,12 @@ export default {
         console.error(e);
       }
     },
-    async mounted() {
-      try {
-        const rawReceiptsList = await fetch(endpoints.receipts);
-        this.receipts = await rawReceiptsList.json();
-        this.tags = getTagsListFromReceiptsList(this.receipts);
-      } catch (e) {
-        console.log(e.message)
-      }
+  },
+  async mounted() {
+    try {
+      this.receipts = await ReceiptsAPI.getAllReceipts()
+    } catch (e: unknown | iCustomError) {
+      console.log('ошибка 1');
     }
   }
 }
@@ -169,6 +166,25 @@ export default {
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
+}
+
+.menu-base-page__description-management,
+.content__btn {
+  border: 1px solid var(--dark);
+  border-radius: 24px;
+  padding: 12px 24px;
+  /*width: 166px;*/
+  height: 38px;
+  background-color: var(--primary-color-2);
+  font-family: var(--font-family), sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: var(--dark);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .tags,

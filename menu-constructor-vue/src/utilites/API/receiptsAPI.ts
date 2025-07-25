@@ -1,11 +1,19 @@
 import {endpoints, headers, methods} from "@/constants/constants.ts";
-import type {iReceipt} from "@/types/types.ts";
+import type { iReceipt } from "@/types/types.ts";
 
 class ReceiptsAPI {
-  getAllReceipts() {
-
+  async getAllReceipts(): Promise<iReceipt[]> {
+    try {
+      const receipts = await fetch(endpoints.receipts);
+      return await receipts.json();
+    } catch (e: unknown) {
+      throw {
+        errNumber: 1,
+        message: 'Не удалось получить рецепты, ошибка',
+      };
+    }
   }
-  getReceiptById() {
+  async getReceiptById() {
 
   }
   async createReceipt(receipt: iReceipt) {
@@ -18,10 +26,10 @@ class ReceiptsAPI {
     });
     return await addingReceipt.json();
   }
-  updateReceipt() {
+  async updateReceipt() {
 
   }
-  deleteReceipt() {
+  async deleteReceipt() {
 
   }
 }
