@@ -6,39 +6,43 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('../views/HomeView.vue'),
     },
     {
       path: '/about',
       name: 'about',
-      component: () => import('../views/AboutView.vue') //lazy load
+      component: () => import('../views/AboutView.vue'), //lazy load
     },
     {
       path: '/menu',
       name: 'menu',
-      component: () => import('../views/MenuConstructor.vue')
+      component: () => import('../views/MenuConstructor.vue'),
     },
     {
       path: '/base',
       name: 'base',
-      component: () => import('../views/MenuBasePage.vue')
-
+      component: () => import('../views/MenuBasePage.vue'),
     },
     {
       path: '/shopping-list',
       name: 'shopping-list',
-      component: () => import('../views/ShoppingListPage.vue')
+      component: () => import('../views/ShoppingListPage.vue'),
     },
     {
       path: '/add-receipt',
       name: 'add-receipt',
-      component: () => import('../views/AddReceiptView.vue')
+      component: () => import('../views/AddReceiptView.vue'),
+    },
+    {
+      path: '/show-receipt/:id',
+      name: 'show-receipt',
+      component: () => import('../views/ShowReceiptView.vue'),
     },
     {
       path: '/:pathMatch(.*)*', // Catch-all route for unmatched paths
       name: 'NotFound',
-      component: () => import('../views/NotFoundPage.vue')
-    }
+      component: () => import('../views/NotFoundPage.vue'),
+    },
   ],
 })
 

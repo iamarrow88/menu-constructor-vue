@@ -1,11 +1,16 @@
 <script setup lang="ts">
-
-import {RouterLink} from "vue-router";
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
   <header class="header">
-    <img alt="Site logo" class="logo" src="@/assets/logo/cooking-logo.svg" width="125" height="125" />
+    <img
+      alt="Site logo"
+      class="logo"
+      src="@/assets/logo/cooking-logo.svg"
+      width="125"
+      height="125"
+    />
 
     <nav class="nav">
       <RouterLink to="/">Home</RouterLink>
@@ -18,7 +23,6 @@ import {RouterLink} from "vue-router";
 </template>
 
 <style scoped>
-
 .header {
   display: grid;
   grid-template-columns: 1fr 5fr;
@@ -39,7 +43,7 @@ import {RouterLink} from "vue-router";
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  font-family: var(--font-family),sans-serif;
+  font-family: var(--font-family), sans-serif;
   font-weight: 500;
   font-size: 14px;
   line-height: 100%;
@@ -91,6 +95,4 @@ nav a:first-of-type {
     opacity: 0.7;
   }
 }
-
-
 </style>

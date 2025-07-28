@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import Header from "@/components/layouts/Header.vue";
+import MyHeader from '@/components/layouts/MyHeader.vue'
 </script>
 
 <template>
   <main class="main">
-    <Header />
+    <MyHeader />
     <RouterView />
   </main>
 </template>
 
 <style>
-
 .main {
   display: flex;
   flex-direction: column;
@@ -25,5 +24,4 @@ import Header from "@/components/layouts/Header.vue";
 .main > div {
   padding: 2rem;
 }
-
 </style>

@@ -1,3 +1,5 @@
-export function arrayIsNotEmpty(array: []) {
-  return array.length !== 0;
+export function arrayIsNotEmpty(array: {}) {
+  if (array instanceof Array) {
+    return array.length !== 0
+  }
 }

@@ -1,37 +1,34 @@
-import {endpoints, headers, methods} from "@/constants/constants.ts";
-import type { iReceipt } from "@/types/types.ts";
+import { endpoints, headers, methods } from '@/constants/constants.ts'
+import type { iReceipt } from '@/types/types.ts'
 
 class ReceiptsAPI {
   async getAllReceipts(): Promise<iReceipt[]> {
     try {
-      const receipts = await fetch(endpoints.receipts);
-      return await receipts.json();
+      const receipts = await fetch(endpoints.receipts)
+      return await receipts.json()
     } catch (e: unknown) {
       throw {
         errNumber: 1,
         message: 'Не удалось получить рецепты, ошибка',
-      };
+      }
     }
   }
-  async getReceiptById() {
-
+  async getReceiptById(id: string): Promise<iReceipt> {
+    const receipt = await fetch(endpoints.receipts + '/' + id)
+    return await receipt.json()
   }
-  async createReceipt(receipt: iReceipt) {
+  async createReceipt(receipt: iReceipt): Promise<Response> {
     const addingReceipt = await fetch(endpoints.receipts, {
       method: methods.POST,
       headers: {
         'Content-Type': headers.ContentType,
       },
-      body: JSON.stringify(receipt)
-    });
-    return await addingReceipt.json();
+      body: JSON.stringify(receipt),
+    })
+    return await addingReceipt.json()
   }
-  async updateReceipt() {
-
-  }
-  async deleteReceipt() {
-
-  }
+  async updateReceipt() {}
+  async deleteReceipt() {}
 }
 
-export default new ReceiptsAPI();
+export default new ReceiptsAPI()

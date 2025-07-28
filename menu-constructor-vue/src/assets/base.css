@@ -27,9 +27,9 @@
   --primary-color-3: #ee6352;
   --primary-color-4: #c4e5fc;
   --light: #fffbf2;
-  --font-family: "Roboto", sans-serif;
-  --second-family: "Montserrat", sans-serif;
-  --third-family: "Homemade Apple", sans-serif;
+  --font-family: 'Roboto', sans-serif;
+  --second-family: 'Montserrat', sans-serif;
+  --third-family: 'Homemade Apple', sans-serif;
 }
 
 /* semantic color variables for this project */

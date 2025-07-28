@@ -1,132 +1,112 @@
 <template>
   <div class="menu-base-page">
-    <button class="menu-base-page__description-management"
-            @click="toggleDescriptionVisibility">
+    <button class="menu-base-page__description-management" @click="toggleDescriptionVisibility">
       {{ isDescriptionVisible ? 'Скрыть описание' : 'Показать описание' }}
     </button>
-    <div v-if="isDescriptionVisible" class="menu-base-page__description description description__visible">
+    <div
+      v-if="isDescriptionVisible"
+      class="menu-base-page__description description description__visible"
+    >
       <h1>Добавление и управление рецептами</h1>
       <p>Добро пожаловать на страницу добавления рецептов!</p>
       <p>Здесь вы можете легко сохранять и управлять своими кулинарными шедеврами.</p>
       <p>Основные функции:</p>
       <ul>
-        <li><span>Добавление нового рецепта:</span>
-          Простая форма для ввода всех необходимых данных о вашем блюде,
-          включая название, ингредиенты, пошаговые инструкции и фото.</li>
-        <li><span>Управление рецептами:</span>
-          Просматривайте все ранее добавленные рецепты в одном месте.
-          Удобный интерфейс позволяет редактировать или
-          удалять существующие рецепты по мере необходимости.</li>
-        <li><span>Поиск по названию или ингредиенту:</span>
-          Найдите нужный рецепт за считанные секунды,
-          используя функцию поиска. Просто введите название рецепта или ингредиент,
-          и мы покажем вам соответствующие результаты.
+        <li>
+          <span>Добавление нового рецепта:</span> Простая форма для ввода всех необходимых данных о
+          вашем блюде, включая название, ингредиенты, пошаговые инструкции и фото.
         </li>
-        <li><span>Фильтрация по приему пищи и тегам:</span>
-          Удобные теги помогут вам быстро сортировать рецепты по типу приема пищи
-          (завтрак, обед, ужин) или по вашим собственным тегам,
-          что делает поиск еще более эффективным.
+        <li>
+          <span>Управление рецептами:</span> Просматривайте все ранее добавленные рецепты в одном
+          месте. Удобный интерфейс позволяет редактировать или удалять существующие рецепты по мере
+          необходимости.
+        </li>
+        <li>
+          <span>Поиск по названию или ингредиенту:</span>
+          Найдите нужный рецепт за считанные секунды, используя функцию поиска. Просто введите
+          название рецепта или ингредиент, и мы покажем вам соответствующие результаты.
+        </li>
+        <li>
+          <span>Фильтрация по приему пищи и тегам:</span>
+          Удобные теги помогут вам быстро сортировать рецепты по типу приема пищи (завтрак, обед,
+          ужин) или по вашим собственным тегам, что делает поиск еще более эффективным.
         </li>
       </ul>
-      <p>Создайте свою кулинарную библиотеку и наслаждайтесь процессом приготовления!
-      </p>
+      <p>Создайте свою кулинарную библиотеку и наслаждайтесь процессом приготовления!</p>
     </div>
     <div class="menu-base-page__content content">
       <RouterLink class="content__btn" to="/add-receipt">Добавить рецепт</RouterLink>
 
-      <fieldset class="menu-base-page__options options"> <!-- !TODO список приемов пищи из списка рецептов -->
+      <fieldset class="menu-base-page__options options">
+        <!-- !TODO список приемов пищи из списка рецептов -->
         <legend class="options__title">Показать рецепты для:</legend>
         <div class="options__input-group">
-          <input type="checkbox"
-                 name="breakfast"
-                 id="breakfast"
-                class="options__input">
-          <label for="breakfast"
-                 class="options__label">
-            Завтрак
-          </label>
+          <input type="checkbox" name="breakfast" id="breakfast" class="options__input" />
+          <label for="breakfast" class="options__label"> Завтрак </label>
         </div>
         <div class="options__input-group">
-          <input type="checkbox"
-                 name="snack"
-                 id="snack"
-                 class="options__input">
-          <label for="snack"
-                 class="options__label">
-            Перекус
-          </label>
+          <input type="checkbox" name="snack" id="snack" class="options__input" />
+          <label for="snack" class="options__label"> Перекус </label>
         </div>
         <div class="options__input-group">
-          <input type="checkbox"
-                 name="lunch"
-                 id="lunch"
-                 class="options__input">
-          <label for="lunch"
-                 class="options__label">
-            Обед
-          </label>
+          <input type="checkbox" name="lunch" id="lunch" class="options__input" />
+          <label for="lunch" class="options__label"> Обед </label>
         </div>
         <div class="options__input-group">
-          <input type="checkbox"
-                 name="dinner"
-                 id="dinner"
-                 class="options__input">
-          <label for="dinner"
-                 class="options__label">
-            Ужин
-          </label>
+          <input type="checkbox" name="dinner" id="dinner" class="options__input" />
+          <label for="dinner" class="options__label"> Ужин </label>
         </div>
       </fieldset>
 
       <fieldset v-if="tags?.length !== 0" class="menu-base-page__tags tags">
         <legend class="tags__title">Показать рецепты с тегами:</legend>
-        <div v-for="(tagName, index) in tags" class="tags__input-group">
-          <input type="checkbox"
-                 :name="`${tagName}`"
-                 :id="`${tagName}`"
-                 :key="index"
-                  class="tags__input">
-          <label for="`${tagName}`"
-                 class="tags__label">{{ tagName }}</label>
+        <div v-for="(tagName, index) in tags" class="tags__input-group" :key="index">
+          <input type="checkbox" :name="`${tagName}`" :id="`${tagName}`" class="tags__input" />
+          <label for="`${tagName}`" class="tags__label">{{ tagName }}</label>
         </div>
       </fieldset>
 
       <div v-if="receipts.length >= 1" class="menu-base-page__receipt-list receipt-list">
-        <div v-for="receipt in receipts" class="receipt-card">
+        <RouterLink
+          v-for="receipt in receipts"
+          class="receipt-card"
+          :to="`/show-receipt/${receipt._id}`"
+          :key="receipt._id"
+          :receiptId="receipt._id"
+        >
           <picture class="receipt-card__picture">
-            <source srcset="../assets/images/photo_2025-05-28_09-34-59.jpg"/>
+            <source srcset="../assets/images/photo_2025-05-28_09-34-59.jpg" />
             <img src="../assets/images/picture_example.jpg" alt="receipt photo" />
           </picture>
 
           <p>{{ receipt.name }}</p>
           <p>{{ translateMealType(receipt.mealType) }}</p>
           <p>Ингредиенты: {{ extractObjectKeysNames(receipt.ingredients) }}</p>
-<!--          <p>Ингредиенты:</p>
+          <!--          <p>Ингредиенты:</p>
           <ul>
             <li v-for="ingredient in receipt.ingredients">{{ ingredient.name }}: {{ ingredient.value }}</li>
           </ul>
           <p>Способ приготовления: {{ receipt.howToCook }}</p>-->
-        </div>
-
+        </RouterLink>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import type {iCustomError, iReceipt} from "@/types/types.ts";
-import {translateMealType} from "../utilites/translateMealType.ts";
-import {RouterLink} from "vue-router";
-import ReceiptsAPI from "@/utilites/API/receiptsAPI.ts";
+import type { iCustomError, iReceipt } from '@/types/types.ts'
+import { translateMealType } from '../utilites/translateMealType.ts'
+import { RouterLink } from 'vue-router'
+import ReceiptsAPI from '@/utilites/API/receiptsAPI.ts'
 
 interface IMenuBasePageData {
-  isDescriptionVisible: boolean;
-  receipts: iReceipt[];
-  tags: string[];
+  isDescriptionVisible: boolean
+  receipts: iReceipt[]
+  tags: string[]
 }
 
 export default {
-  components: {RouterLink},
+  components: { RouterLink },
   data(): IMenuBasePageData {
     return {
       isDescriptionVisible: true, //!TODO пусть выбор сохраняется при перезагрузке страницы
@@ -138,24 +118,24 @@ export default {
     translateMealType,
     findMealType: translateMealType,
     toggleDescriptionVisibility() {
-      this.isDescriptionVisible = !this.isDescriptionVisible;
+      this.isDescriptionVisible = !this.isDescriptionVisible
     },
-    extractObjectKeysNames(array: { name: string, value: string }[]) {
+    extractObjectKeysNames(array: { name: string; value: string }[]) {
       try {
-        const names = array.map(item => item.name);
-        return names.join(', ');
+        const names = array.map((item) => item.name)
+        return names.join(', ')
       } catch (e) {
-        console.error(e);
+        console.error(e)
       }
     },
   },
   async mounted() {
     try {
       this.receipts = await ReceiptsAPI.getAllReceipts()
-    } catch (e: unknown | iCustomError) {
-      console.log('ошибка 1');
+    } catch (e: unknown | siCustomError) {
+      console.log('ошибка 1')
     }
-  }
+  },
 }
 </script>
 
@@ -188,7 +168,7 @@ export default {
 }
 
 .tags,
-.options  {
+.options {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -245,7 +225,8 @@ export default {
   overflow: hidden;
 }
 
-.receipt-card__picture > source, .receipt-card__picture > img  {
+.receipt-card__picture > source,
+.receipt-card__picture > img {
   display: block;
   max-width: 100%;
   height: auto;

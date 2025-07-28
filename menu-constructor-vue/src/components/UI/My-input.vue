@@ -1,27 +1,25 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "My-input",
+  name: 'My-input',
   props: {
     inputName: String,
     inputLabel: String,
   },
-  data(){
+  data() {
     return {
       inputModel: '',
     }
-  }
+  },
 })
 </script>
 
 <template>
   <div class="my-input">
-    <input type="text" :value="inputModel" @onChange="updateInputValue"/>
-    <label for="`${inputName}`">{{inputLabel}}</label>
+    <input type="text" :value="inputModel" @onChange="updateInputValue" />
+    <label for="`${inputName}`">{{ inputLabel }}</label>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

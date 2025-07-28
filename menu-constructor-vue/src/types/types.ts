@@ -1,24 +1,25 @@
 export interface iMealType {
-  "breakfast": boolean,
-  "lunch": boolean,
-  "snack": boolean,
-  "dinner": boolean,
+  breakfast: boolean
+  lunch: boolean
+  snack: boolean
+  dinner: boolean
 }
 
 export interface iReceipt {
-  "name": string,
-  "mealType": iMealType,
-  "ingredients": iIngredient[],
-  "howToCook": string,
-  tags: string[],
+  _id?: string
+  name: string
+  mealType: iMealType
+  ingredients: iIngredient[]
+  howToCook: string
+  tags: string[]
 }
 
 export interface iCustomError {
-  errNumber: number,
-  message: string,
+  errNumber: number
+  message: string
 }
 
-interface iIngredient {
-  name: string,
+export interface iIngredient {
+  name: string
   value: string
 }
