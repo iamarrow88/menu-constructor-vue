@@ -1,6 +1,6 @@
 <template>
   <div class="menu-base-page">
-    <button class="menu-base-page__description-management" @click="toggleDescriptionVisibility">
+    <button class="menu-base-page__description-management btn" @click="toggleDescriptionVisibility">
       {{ isDescriptionVisible ? 'Скрыть описание' : 'Показать описание' }}
     </button>
     <div
@@ -35,7 +35,7 @@
       <p>Создайте свою кулинарную библиотеку и наслаждайтесь процессом приготовления!</p>
     </div>
     <div class="menu-base-page__content content">
-      <RouterLink class="content__btn" to="/add-receipt">Добавить рецепт</RouterLink>
+      <RouterLink class="content__btn btn" to="/add-receipt">Добавить рецепт</RouterLink>
 
       <fieldset class="menu-base-page__options options">
         <!-- !TODO список приемов пищи из списка рецептов -->
@@ -87,7 +87,7 @@
             <li v-for="ingredient in receipt.ingredients">{{ ingredient.name }}: {{ ingredient.value }}</li>
           </ul>
           <p>Способ приготовления: {{ receipt.howToCook }}</p>-->
-        </RouterLink>
+          <button class="btn">Добавить в меню</button>        </RouterLink>
       </div>
     </div>
   </div>
@@ -148,12 +148,12 @@ export default {
   width: 100%;
 }
 
-.menu-base-page__description-management,
+/*.menu-base-page__description-management,
 .content__btn {
   border: 1px solid var(--dark);
   border-radius: 24px;
   padding: 12px 24px;
-  /*width: 166px;*/
+  !*width: 166px;*!
   height: 38px;
   background-color: var(--primary-color-2);
   font-family: var(--font-family), sans-serif;
@@ -165,7 +165,7 @@ export default {
   cursor: pointer;
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
-}
+}*/
 
 .tags,
 .options {

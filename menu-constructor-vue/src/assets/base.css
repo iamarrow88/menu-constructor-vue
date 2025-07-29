@@ -82,3 +82,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.btn {
+  border: 1px solid var(--dark);
+  border-radius: 24px;
+  padding: 12px 24px;
+  /*width: 166px;*/
+  height: 38px;
+  background-color: var(--primary-color-2);
+  font-family: var(--font-family), sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: var(--dark);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}

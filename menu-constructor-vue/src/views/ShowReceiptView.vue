@@ -11,6 +11,8 @@
         <p :key="Date.now()">{{ tag }}</p>
       </div>
     </div>
+
+    <button class="btn">Добавить в меню</button>
   </div>
 </template>
 
