@@ -23,3 +23,11 @@ export interface iIngredient {
   name: string
   value: string
 }
+
+export interface selectedMeals {
+  breakfast: boolean,
+  snack1: boolean,
+  lunch: boolean,
+  snack2: boolean,
+  dinner: boolean,
+}
