@@ -2,7 +2,7 @@
   <div class="day-meal-table">
     <p class="day-meal-table__title">{{ dayName }}</p>
 
-    <table class="day-meal-table__table table">
+    <table :class="`table-${columnsNumber()}columns day-meal-table__table table`">
       <DayMealTableColumn v-if="selectedMeals.breakfast" meal-name="Завтрак" :meal-for-a-day="breakfastForADay" />
       <DayMealTableColumn v-if="selectedMeals.snack1" meal-name="Перекус 1" :meal-for-a-day="snack1ForADay" />
       <DayMealTableColumn v-if="selectedMeals.lunch" meal-name="Обед" :meal-for-a-day="lunchForADay" />
@@ -43,13 +43,22 @@ export default{
   methods: {
     checkMealExist(mealName: keyof selectedMeals): boolean {
       return Boolean(this.selectedMeals[mealName]);
+    },
+    columnsNumber(): number {
+      let columnsNumber = 0;
+      for (const mealName in this.selectedMeals) {
+        if (this.checkMealExist(mealName as keyof selectedMeals)) {
+          columnsNumber++;
+        }
+      }
+      return columnsNumber;
     }
-  }
+  },
 }
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .day-meal-table {
   padding: 5px 1rem 1rem;
   width: 100%;
@@ -63,9 +72,37 @@ export default{
   padding-bottom: 10px;
 }
 
-.table {
+.table-5columns {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  border: 1px solid;
+  height: 85%;
+}
+
+.table-4columns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid;
+  height: 85%;
+}
+
+.table-3columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid;
+  height: 85%;
+}
+
+.table-2columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: 1px solid;
+  height: 85%;
+}
+
+.table-1columns {
+  display: grid;
+  grid-template-columns: 100%;
   border: 1px solid;
   height: 85%;
 }

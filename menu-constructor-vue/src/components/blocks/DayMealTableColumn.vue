@@ -31,4 +31,13 @@ export default {
    grid-template-rows: 1fr 2fr 2fr 2fr;
  }
 
+ td {
+   padding: 0 1rem;
+   border-left: 1px solid var(--dark);
+ }
+
+ tr:first-child > td {
+   border-left: none;
+ }
+
 </style>
