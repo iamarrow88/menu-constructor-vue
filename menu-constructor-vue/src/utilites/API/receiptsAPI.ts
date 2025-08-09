@@ -27,6 +27,10 @@ class ReceiptsAPI {
     })
     return await addingReceipt.json()
   }
+  async findReceiptsBYQuery(query: string): Promise<Response> {
+    const rewReceipts = await fetch(`${endpoints.receipts}?mealType=${query}`)
+    return await rewReceipts.json()
+  }
   async updateReceipt() {}
   async deleteReceipt() {}
 }

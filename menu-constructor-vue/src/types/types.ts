@@ -5,6 +5,7 @@ export interface iMealType {
   dinner: boolean
 }
 
+
 export interface iReceipt {
   _id?: string
   name: string

@@ -40,35 +40,38 @@
       <fieldset class="menu-base-page__options options">
         <!-- !TODO список приемов пищи из списка рецептов -->
         <legend class="options__title">Показать рецепты для:</legend>
-        <div class="options__input-group">
-          <input type="checkbox" name="breakfast" id="breakfast" class="options__input" />
-          <label for="breakfast" class="options__label"> Завтрак </label>
-        </div>
-        <div class="options__input-group">
-          <input type="checkbox" name="snack" id="snack" class="options__input" />
-          <label for="snack" class="options__label"> Перекус </label>
-        </div>
-        <div class="options__input-group">
-          <input type="checkbox" name="lunch" id="lunch" class="options__input" />
-          <label for="lunch" class="options__label"> Обед </label>
-        </div>
-        <div class="options__input-group">
-          <input type="checkbox" name="dinner" id="dinner" class="options__input" />
-          <label for="dinner" class="options__label"> Ужин </label>
+        <div v-for="(mealType, index) in mealTypes" class="tags__input-group" :key="index">
+          <div class="options__input-group">
+            <input type="checkbox"
+                   @change="updateReceiptsList"
+                   :name="`${mealType.name}`"
+                   :id="`${mealType.name}`"
+                   :value="`${mealType.name}`"
+                   class="options__input"
+                   v-model="selectedMeals" />
+            <label :for="`${mealType.name}`" class="options__label">{{ mealType.translate }}</label>
+          </div>
         </div>
       </fieldset>
 
       <fieldset v-if="tags?.length !== 0" class="menu-base-page__tags tags">
         <legend class="tags__title">Показать рецепты с тегами:</legend>
         <div v-for="(tagName, index) in tags" class="tags__input-group" :key="index">
-          <input type="checkbox" :name="`${tagName}`" :id="`${tagName}`" class="tags__input" />
+          <input type="checkbox"
+                 @change="updateReceiptsList"
+                 :name="`${tagName}`"
+                 :id="`${tagName}`"
+                 :value="`${tagName}`"
+                 class="tags__input"
+                 v-model="selectedTags" />
           <label for="`${tagName}`" class="tags__label">{{ tagName }}</label>
         </div>
       </fieldset>
 
-      <div v-if="receipts.length >= 1" class="menu-base-page__receipt-list receipt-list">
+      <div v-if="receiptsList.length >= 1"
+           class="menu-base-page__receipt-list receipt-list">
         <RouterLink
-          v-for="receipt in receipts"
+          v-for="receipt in receiptsList"
           class="receipt-card"
           :to="`/show-receipt/${receipt._id}`"
           :key="receipt._id"
@@ -82,27 +85,32 @@
           <p>{{ receipt.name }}</p>
           <p>{{ translateMealType(receipt.mealType) }}</p>
           <p>Ингредиенты: {{ extractObjectKeysNames(receipt.ingredients) }}</p>
-          <!--          <p>Ингредиенты:</p>
-          <ul>
-            <li v-for="ingredient in receipt.ingredients">{{ ingredient.name }}: {{ ingredient.value }}</li>
-          </ul>
-          <p>Способ приготовления: {{ receipt.howToCook }}</p>-->
-          <button class="btn">Добавить в меню</button>        </RouterLink>
+          <p>Теги: {{ receipt.tags.length !== 0 ? receipt.tags.join(', ') : 'Отсутствуют' }}</p>
+          <button class="btn">Добавить в меню</button>
+        </RouterLink>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import type { iCustomError, iReceipt } from '@/types/types.ts'
+import type {iCustomError, iMealType, iReceipt} from '@/types/types.ts'
 import { translateMealType } from '../utilites/translateMealType.ts'
 import { RouterLink } from 'vue-router'
 import ReceiptsAPI from '@/utilites/API/receiptsAPI.ts'
+import receiptsStorage from "@/stores/receiptsStorage.ts";
 
+interface mealType {
+  name: string,
+  translate: string,
+}
 interface IMenuBasePageData {
   isDescriptionVisible: boolean
-  receipts: iReceipt[]
-  tags: string[]
+  receipts: iReceipt[],
+  mealTypes: mealType[],
+  selectedMeals: string[],
+  tags: string[],
+  selectedTags: string[],
 }
 
 export default {
@@ -111,7 +119,31 @@ export default {
     return {
       isDescriptionVisible: true, //!TODO пусть выбор сохраняется при перезагрузке страницы
       receipts: [],
-      tags: [],
+      tags: receiptsStorage.tags,
+      selectedTags: [],
+      selectedMeals: [],
+      mealTypes: [
+        {
+          name: 'breakfast',
+          translate: 'Завтрак'
+        },
+        {
+          name: 'lunch',
+          translate: 'Обед'
+        },
+        {
+          name: 'dinner',
+          translate: 'Ужин'},
+        {
+          name: 'snack',
+          translate: 'Перекус'
+        }
+      ],
+    }
+  },
+  computed: {
+    receiptsList(): iReceipt[] { /* !TODO filter doesn't work correctly */
+      return this.filterAllReceiptsByMealType(this.filterAllReceiptsByTags(this.receipts, this.selectedTags), this.selectedMeals);
     }
   },
   methods: {
@@ -128,11 +160,46 @@ export default {
         console.error(e)
       }
     },
+    getFirstSelectedMealTypes() {
+      return this.mealTypes.map((mealType) => mealType.name);
+    },
+    async updateReceiptsList() {
+      console.log('updateReceiptsList');
+      this.receipts = await ReceiptsAPI.getAllReceipts();
+    },
+    filterAllReceiptsByTags(receipts: iReceipt[], tags: string[]): iReceipt[] {
+      return receipts.reduce((filteredReceipts, receipt) => {
+        if (receipt.tags.length === 0) {
+          filteredReceipts.push(receipt);
+        } else {
+          for (let j = 0; j < tags.length; j++) {
+            if (receipt.tags.includes(tags[j]) && !filteredReceipts.includes(receipt)) {
+              filteredReceipts.push(receipt);
+            }
+          }
+        }
+        return filteredReceipts;
+      }, [] as iReceipt[]);
+    },
+    filterAllReceiptsByMealType(receipts: iReceipt[], mealTypes: string[]) {
+      return receipts.reduce((filteredReceipts, receipt) => {
+        for (let i = 0; i < mealTypes.length; i++) {
+          if (receipt.mealType[mealTypes[i] as keyof iMealType] && !filteredReceipts.includes(receipt)) {
+            filteredReceipts.push(receipt);
+            break;
+          }
+        }
+        return filteredReceipts;
+      }, [] as iReceipt[])
+    },
   },
   async mounted() {
     try {
-      this.receipts = await ReceiptsAPI.getAllReceipts()
-    } catch (e: unknown | siCustomError) {
+      this.receipts = await ReceiptsAPI.getAllReceipts();
+      this.tags = receiptsStorage.getTagsList(this.receipts);
+      this.selectedTags = [...this.tags];
+      this.selectedMeals = this.getFirstSelectedMealTypes();
+    } catch (e: unknown | iCustomError) {
       console.log('ошибка 1')
     }
   },
