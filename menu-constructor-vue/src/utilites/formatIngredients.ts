@@ -1,4 +1,4 @@
-import type {iIngredient} from "@/types/types.ts";
+import type {iIngredient} from "@/data/types/types.ts";
 
 export function formatIngredients(rawIngredients: string, separator: string): iIngredient[] | undefined {
   try {

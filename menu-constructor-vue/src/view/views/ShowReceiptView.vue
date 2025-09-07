@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts">
-import type { iReceipt } from '@/types/types.ts'
-import ReceiptsService from '@/services/receiptsService.ts'
+import type { iReceipt } from '@/data/types/types.ts'
+import ReceiptsService from '@/utilites/services/receiptsService.ts'
 import { translateMealType } from '@/utilites/translateMealType.ts'
 import { ingredientsPrettier } from '@/utilites/ingredientsPrittier.ts'
 

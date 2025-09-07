@@ -34,7 +34,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@use '../../assets/styles/modules/constants.scss';
+
  tr {
    display: grid;
    grid-template-rows: 1fr 2fr 2fr 2fr;
@@ -42,7 +44,7 @@ export default {
 
  td {
    padding: 0 1rem;
-   border-left: 1px solid var(--dark);
+   border-left: 1px solid constants.$dark;
  }
 
  tr:first-child > td {

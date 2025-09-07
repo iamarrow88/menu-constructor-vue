@@ -1,4 +1,4 @@
-import type { iIngredient } from '@/types/types.ts'
+import type { iIngredient } from '@/data/types/types.ts'
 
 export function ingredientsPrettier(ingredients: iIngredient[]): string[] {
   return ingredients.map((ingredient) => {

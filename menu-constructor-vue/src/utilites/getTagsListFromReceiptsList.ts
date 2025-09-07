@@ -1,4 +1,4 @@
-import type { iReceipt } from '@/types/types.ts'
+import type { iReceipt } from '@/data/types/types.ts'
 
 export function getTagsListFromReceiptsList(receiptsList: Array<iReceipt>) {
   const tags = []

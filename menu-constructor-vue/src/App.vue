@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import MyHeader from '@/components/layouts/MyHeader.vue'
-import receiptsStorage from "@/stores/receiptsStorage.ts";
+import MyHeader from '@/view/components/layouts/MyHeader.vue'
+import receiptsStorage from "@/data/stores/receiptsStorage.ts";
 receiptsStorage.refreshAllReceipts();
 </script>
 

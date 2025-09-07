@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts">
-import DayMealTableColumn from "@/components/blocks/DayMealTableColumn.vue";
+import DayMealTableColumn from "@/view/components/blocks/DayMealTableColumn.vue";
 import type {PropType} from "vue";
-import type {selectedMeals} from "@/types/types.ts";
+import type {selectedMeals} from "@/data/types/types.ts";
 
 export default{
   name: "DayMealTable",

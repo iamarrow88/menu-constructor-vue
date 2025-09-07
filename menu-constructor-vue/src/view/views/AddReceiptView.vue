@@ -70,11 +70,11 @@
 </template>
 
 <script lang="ts">
-import { formatIngredients } from '@/utilites/formatIngredients.js'
-import { stringIsNotEmpty } from '@/utilites/validation/string-is-not-empty.js'
-import { arrayIsNotEmpty } from '@/utilites/validation/array-is-not-empty.js'
-import receiptsAPI from '@/utilites/API/receiptsAPI.js'
-import type {iIngredient} from "@/types/types.ts";
+import { formatIngredients } from '@/utilites/formatIngredients.ts'
+import { stringIsNotEmpty } from '@/utilites/validation/string-is-not-empty.ts'
+import { arrayIsNotEmpty } from '@/utilites/validation/array-is-not-empty.ts'
+import receiptsAPI from '@/utilites/API/receiptsAPI.ts'
+import type {iIngredient} from "@/data/types/types.ts";
 
 interface IAddReceiptViewData {
   receipt: {

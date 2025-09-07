@@ -1,5 +1,6 @@
-import type {iReceipt} from "@/types/types.ts";
+import type {iReceipt} from "@/data/types/types.ts";
 import ReceiptsAPI from "@/utilites/API/receiptsAPI.ts";
+import ReceiptServices from "@/utilites/services/receiptServices.ts";
 
 class ReceiptsStorage {
   public receipts: iReceipt[];
@@ -8,10 +9,15 @@ class ReceiptsStorage {
     this.receipts = [];
     this.tags = [];
   }
-  refreshAllReceipts() {
-    ReceiptsAPI.getAllReceipts().then((receipts) => {
-      this.receipts = receipts;
+  async refreshAllReceipts() {
+    ReceiptServices.getAllReceipts().then((receipts) => {
+      if (receipts) {
+        this.receipts = receipts;
+      }
     })
+    /*ReceiptsAPI.fetchAllReceipts().then((receipts) => {
+      this.receipts = receipts.json();
+    })*/
   }
   addReceipt(newReceipt: iReceipt) {
     ReceiptsAPI.createReceipt(newReceipt).then(() => {

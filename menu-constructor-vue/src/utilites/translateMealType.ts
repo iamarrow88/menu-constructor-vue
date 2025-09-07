@@ -1,4 +1,4 @@
-import type { iMealType } from '@/types/types.ts'
+import type { iMealType } from '@/data/types/types.ts'
 
 export function translateMealType(rawMealType: iMealType): string {
   const mealTypes: Record<keyof iMealType, string> = {

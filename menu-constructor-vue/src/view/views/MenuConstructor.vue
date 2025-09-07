@@ -79,8 +79,8 @@
   </div>
 </template>
 <script lang="ts">
-import DayMealTable from "@/components/blocks/DayMealTable.vue";
-import type { selectedMeals } from "@/types/types.ts";
+import DayMealTable from "@/view/components/blocks/DayMealTable.vue";
+import type { selectedMeals } from "@/data/types/types.ts";
 
 interface data {
   isDescriptionVisible: Boolean,
@@ -112,7 +112,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .menu-constructor-page {
   display: flex;
   flex-direction: column;

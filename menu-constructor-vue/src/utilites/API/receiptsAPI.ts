@@ -1,17 +1,9 @@
-import { endpoints, headers, methods } from '@/constants/constants.ts'
-import type { iReceipt } from '@/types/types.ts'
+import { endpoints, headers, methods } from '@/data/constants/constants.ts'
+import type { iReceipt } from '@/data/types/types.ts'
 
 class ReceiptsAPI {
-  async getAllReceipts(): Promise<iReceipt[]> {
-    try {
-      const receipts = await fetch(endpoints.receipts)
-      return await receipts.json()
-    } catch (e: unknown) {
-      throw {
-        errNumber: 1,
-        message: 'Не удалось получить рецепты, ошибка',
-      }
-    }
+  async fetchAllReceipts(): Promise<Response> {
+      return await fetch(endpoints.receipts)
   }
   async getReceiptById(id: string): Promise<iReceipt> {
     const receipt = await fetch(endpoints.receipts + '/' + id)

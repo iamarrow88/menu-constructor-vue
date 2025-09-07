@@ -94,11 +94,12 @@
 </template>
 
 <script lang="ts">
-import type {iCustomError, iMealType, iReceipt} from '@/types/types.ts'
-import { translateMealType } from '../utilites/translateMealType.ts'
+import type {iCustomError, iMealType, iReceipt} from '@/data/types/types.ts'
+import { translateMealType } from '@/utilites/translateMealType.ts'
 import { RouterLink } from 'vue-router'
-import ReceiptsAPI from '@/utilites/API/receiptsAPI.ts'
-import receiptsStorage from "@/stores/receiptsStorage.ts";
+import receiptsStorage from "@/data/stores/receiptsStorage.ts";
+import ReceiptServices from "@/utilites/services/receiptServices.ts";
+import {extractObjectKeysNames} from "@/utilites/extraction/extractData.ts";
 
 interface mealType {
   name: string,
@@ -148,24 +149,23 @@ export default {
   },
   methods: {
     translateMealType,
+    extractObjectKeysNames,
     findMealType: translateMealType,
     toggleDescriptionVisibility() {
       this.isDescriptionVisible = !this.isDescriptionVisible
     },
-    extractObjectKeysNames(array: { name: string; value: string }[]) {
-      try {
-        const names = array.map((item) => item.name)
-        return names.join(', ')
-      } catch (e) {
-        console.error(e)
-      }
-    },
+
     getFirstSelectedMealTypes() {
       return this.mealTypes.map((mealType) => mealType.name);
     },
     async updateReceiptsList() {
       console.log('updateReceiptsList');
-      this.receipts = await ReceiptsAPI.getAllReceipts();
+      ReceiptServices.getAllReceipts().then((receipts) => {
+        if (receipts) {
+          this.receipts = receipts;
+        }
+      })
+      /*this.receipts = await ReceiptsAPI.fetchAllReceipts();*/
     },
     filterAllReceiptsByTags(receipts: iReceipt[], tags: string[]): iReceipt[] {
       return receipts.reduce((filteredReceipts, receipt) => {
@@ -195,7 +195,12 @@ export default {
   },
   async mounted() {
     try {
-      this.receipts = await ReceiptsAPI.getAllReceipts();
+      ReceiptServices.getAllReceipts().then((receipts) => {
+        if (receipts) {
+          this.receipts = receipts;
+        }
+      })
+      /*this.receipts = await ReceiptsAPI.fetchAllReceipts();*/
       this.tags = receiptsStorage.getTagsList(this.receipts);
       this.selectedTags = [...this.tags];
       this.selectedMeals = this.getFirstSelectedMealTypes();

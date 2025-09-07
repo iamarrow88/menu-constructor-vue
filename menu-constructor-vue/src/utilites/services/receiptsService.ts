@@ -1,4 +1,4 @@
-import type { iReceipt } from '@/types/types.ts'
+import type { iReceipt } from '@/data/types/types.ts'
 import ReceiptsAPI from '@/utilites/API/receiptsAPI.ts'
 
 class ReceiptsService {

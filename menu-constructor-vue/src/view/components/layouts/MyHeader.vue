@@ -7,7 +7,7 @@ import { RouterLink } from 'vue-router'
     <img
       alt="Site logo"
       class="logo"
-      src="@/assets/logo/cooking-logo.svg"
+      src="../../assets/logo/cooking-logo.svg"
       width="125"
       height="125"
     />
