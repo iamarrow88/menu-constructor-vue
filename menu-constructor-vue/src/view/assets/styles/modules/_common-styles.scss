@@ -1,0 +1,81 @@
+@use 'constants';
+
+html,
+body {
+  height: 100%;
+  font-weight: 400;
+  font-family: "Inter", serif;
+  font-size: 16px;
+  font-style: normal;
+  color: constants.$dark;
+  line-height: 1;
+  vertical-align: baseline;
+  background-color: white;
+  -webkit-text-size-adjust: 100%; /* Prevent adjustments of font size after orientation changes in iOS */
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 1400px;
+  overflow: hidden;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border: 2px solid constants.$dark;
+}
+
+input::placeholder,
+textarea::placeholder,
+[data-i18] {
+  font-family: "Inter", sans-serif;
+}
+
+input:focus-visible::placeholder {
+  color: blueviolet;
+}
+
+.svg-parent .svg-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.svg-icon use {
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  width: 100%;
+  font-weight: normal;
+}
+
+
+
+.btn {
+  border: 1px solid constants.$dark;
+  border-radius: 24px;
+  padding: 12px 24px;
+  /*width: 166px;*/
+  height: 38px;
+  background-color: constants.$primary-color-2;
+  font-family: constants.$font-family, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: constants.$dark;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+
+@media (hover: hover) {
+  a:hover,
+  button:hover {
+    opacity: 0.7;
+  }
+}
